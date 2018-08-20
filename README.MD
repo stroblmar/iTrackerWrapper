@@ -37,10 +37,10 @@ Upon executing the above command you will launch the image, which for all intent
 ```
 behave as expected. 
 
-At this point, big thanks to the authors of the [cafe docker image](https://github.com/BVLC/caffe/tree/master/docker) and [dl-docker]((https://github.com/floydhub/dl-docker)), whose work served as a template for this image.
+At this point, big thanks to the authors of the [cafe docker image](https://github.com/BVLC/caffe/tree/master/docker) and [dl-docker](https://github.com/floydhub/dl-docker), whose work served as a template for this image.
 
 ## 2. Pre-Processing the Data
-Next, we have to extract the frames from the video. To do so, we use the `skvideo` module in Python. I've written a script to do this automatically for all files in the "data" directory. To run this, simply run
+Next, we have to extract the frames from the video. To do so, we use the `skvideo` module in Python. I've written a script to do this automatically for all files in the `data` directory. To run this, simply run
 
 ```bash
 python extractFrames.py
@@ -50,7 +50,7 @@ The script is set up so to process all files in the `data` folder. So, **if you'
 **Note:** For some reason the `skvideo` struggles with the videos from certain cameras. In those cases the `width` and `height` axes are the wrong way around. To overcome this, I have copied the method from the source code, and modified it. **If your extracted frames look like garbage**, see the details in the comments in `extractFrames.py` on how to use this alternative `read()` function.
 
 ## 3. Segmenting the Images
-
+iTracker uses 
 
 To Do
 - [] Add note that commands work on mac and linux. Not sure about windows
