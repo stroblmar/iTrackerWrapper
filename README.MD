@@ -61,9 +61,21 @@ Again, this script is written so that it will segment all videos in the `data` d
 
 **Note:** Segmentation turned out to be surprisingly unreliable. You'd think, given how common face detectors are nowadays, segmentation shouldn't be a problem. However, in our study we found it regularly failed, even for "nice" pictures. I'm sure you can do better with a more sophisticated segmentation algorithm, but I did not have time to look into this. However, given Krafka and co-authors also report loosing almost 50% [1] of frames to segmentation - and they were using the iOS segmentation tool - perhaps it is a more widespread problem. So, don't be surprised if a good number of your segmentations fail.
 
+## 3. Estimating Gaze using iTracker
+We're now ready to use iTracker. To do so, again I prepared a script that will analyse all video folders in the `data` directory. To run it, simply do:
+
+```bash
+python runGazeEstimation.py
+```  
+After processing is done, this will save the predictions for each video as a csv file in the video directory in `./data/`.
+
+This script utilises the iTracker wrapper class I developed for the project. This class has a number of further features, such as truncation of predictions to the screen, or multi-threading. To learn more about it explore the `iTrackerWrapper.py` source file.
+
+
+
 To Do
 - [] Add note that commands work on mac and linux. Not sure about windows
-- [] Segmentation
+- [] Explain in more detail how segmentation works and the pieces I'm using
 - [] Run prediction both serial and in parallel
 - [] Add r script to plot results
 - [] Add docker reference to readme, and potentially picture as well
