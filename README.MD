@@ -8,7 +8,9 @@ To get started, clone this repository to a convenient place on your computer, an
 git clone https://github.com/ms234/iTrackerWrapper.git
 ```
 
-## 1. The Docker Image
+## 1. The Docker Image  
+![Docker Logo](images/dockerLogo.png)
+
 iTracker was developed in Cafe, which has a number of inconvenient dependencies. In order to make it easier to get this code to run, and to aid reproducibility we generated a [Docker](https://www.docker.com/) image which has all the necessary dependencies installed. Docker in essence acts as a virtual machine and allows you to install libraries and software without mucking up your own. To install our image, install docker, and run the following bash command inside the `dockerImage` directory in this repository:
 
 ```
