@@ -112,10 +112,5 @@ RUN pip --no-cache-dir install \
 # Expose Ports for Ipython (8888) and ssh (22 8088 50070)
 EXPOSE 8888 22 8088 50070
 WORKDIR /workspace
-#COPY startUpScript.sh startUpScript.sh
-#CMD ./startUpScript.sh
-#CMD ["sh", "-c" ,"/usr/sbin/sshd -D; /bin/bash"]
-#CMD ["/usr/local/bin/jupyter", "notebook"]
-CMD ["/usr/sbin/sshd", "-D"]
-#CMD ["/bin/bash"]
+CMD ["/bin/bash"]
 #CMD ["sh", "-c" ,"/usr/local/bin/jupyter notebook; /bin/bash"]
