@@ -40,6 +40,7 @@ behave as expected.
 At this point, big thanks to the authors of the [cafe docker image](https://github.com/BVLC/caffe/tree/master/docker) and [dl-docker](https://github.com/floydhub/dl-docker), whose work served as a template for this image.
 
 ## 2. Pre-Processing the Data
+### 2.1. Extracting the Frames
 Next, we have to extract the frames from the video. To do so, we use the `skvideo` module in Python. I've written a script to do this automatically for all files in the `data` directory. To run this, simply run
 
 ```bash
@@ -49,8 +50,16 @@ The script is set up so to process all files in the `data` folder. So, **if you'
 
 **Note:** For some reason the `skvideo` struggles with the videos from certain cameras. In those cases the `width` and `height` axes are the wrong way around. To overcome this, I have copied the method from the source code, and modified it. **If your extracted frames look like garbage**, see the details in the comments in `extractFrames.py` on how to use this alternative `read()` function.
 
-## 3. Segmenting the Images
-iTracker uses 
+### 2.2. Segmenting the Images
+iTracker uses crops of the eyes and the mouth from the images to make its predictions. Thus, in the next step we have to segment the eyes and the mouth. We do so using the Viola-Jones segmentation algorithm implemented in `OpenCV`. To perform segmentation, run:
+
+```bash
+python segmentFrames.py
+``` 
+
+Again, this script is written so that it will segment all videos in the `data` directory. So, if you previously put your own videos there and extracted the frames, this script should do the segmentation for you automatically as well.
+
+**Note:** Segmentation turned out to be surprisingly unreliable. You'd think, given how common face detectors are nowadays, segmentation shouldn't be a problem. However, in our study we found it regularly failed, even for "nice" pictures. I'm sure you can do better with a more sophisticated segmentation algorithm, but I did not have time to look into this. However, given Krafka and co-authors also report loosing almost 50% [1] of frames to segmentation - and they were using the iOS segmentation tool - perhaps it is a more widespread problem. So, don't be surprised if a good number of your segmentations fail.
 
 To Do
 - [] Add note that commands work on mac and linux. Not sure about windows
