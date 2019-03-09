@@ -4,7 +4,7 @@
 # Configure Script
 imgExtension = ".jpg"
 MIN_EYE_SIZE = 40 # Minimum number of pixels to be contained in the segmentation of an eye
-dataPath = "/workspace/iTrackerWrapper/data" # Path to where the videos are housed
+dataPath = "/workspace/data" # Path to where the videos are housed
 modelPath = "/workspace/utils/iTrackerModelFiles" # Path to iTracker model files
 myUtilsPath = '/workspace/utils'
 classifierFilesDir = "/workspace/utils/opencv_haarcascades"

@@ -8,7 +8,7 @@
 # =============================================================
 # Configure Script
 # Configurations for file system and image segmentation
-dataPath = "/workspace/iTrackerWrapper/data" # Path to where the videos are housed
+dataPath = "/workspace/data" # Path to where the videos are housed
 imgExtension = ".jpg"
 extractRate = 1 # Extract every nth frame from the video
 
