@@ -3,6 +3,7 @@
 # =============================================================
 # Configure Script
 logInterval = 100 # Interval (in frames) at which progress update is printed to the screen
+saveActivationsB = False # Save activations of the last layer of the neural net (used for training the SVR)
 
 # Set directories
 dataPath = "/workspace/iTrackerWrapper/data" # Path to where the videos are housed
@@ -51,7 +52,9 @@ for videoName in videoNameList:
 
     # Set up pandas dataframe to hold results
     index = range(len(frameList))
-    columns = ['VideoName', 'FrameId', 'EstPosX', 'EstPosY'] #+ ["Activation"+str(i) for i in range(128)]
+    columns = ['VideoName', 'FrameId', 'EstPosX', 'EstPosY']
+    if saveActivationsB:
+        columns += ["Activation"+str(i) for i in range(128)]
     performanceDF = pd.DataFrame(index=index, columns=columns)
     performanceDF = performanceDF.fillna(0)  # with 0s rather than NaNs
 
@@ -79,7 +82,10 @@ for videoName in videoNameList:
 
         # Estimate Gaze
         predPosVec = gazeEstimator.EstimateGazeForImage(currFrameDataDict)
-        performanceDF.loc[dfIdx] = [videoName, frameId, predPosVec[0], predPosVec[1]] #+ gazeEstimator.net.blobs['fc1'].data.tolist()[0]
+        resultsRow = [videoName, frameId, predPosVec[0], predPosVec[1]]
+        if saveActivationsB: # Save the fc1 layer (used for training the SVR)
+            resultsRow += gazeEstimator.net.blobs['fc1'].data.tolist()[0]
+        performanceDF.loc[dfIdx] = resultsRow
         dfIdx += 1
 
     outName = dataPath + "/" + videoName + "/" + "gazePredictions.csv"
