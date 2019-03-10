@@ -6,7 +6,7 @@ logInterval = 100 # Interval (in frames) at which progress update is printed to 
 saveActivationsB = False # Save activations of the last layer of the neural net (used for training the SVR)
 
 # Set directories
-dataPath = "/workspace/iTrackerWrapper/data" # Path to where the videos are housed
+dataPath = "/workspace/data" # Path to where the videos are housed
 modelPath = "/workspace/utils/iTrackerModelFiles" # Path to iTracker model files
 caffePath = '/opt/caffe'  # path to caffe
 # ================================================
