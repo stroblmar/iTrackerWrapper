@@ -1,6 +1,6 @@
 # A Python Wrapper for iTracker
 <p align="center">
-  <img src="images/visualAbstract.png" width="350" alt="Outline of our pipeline">
+  <img src="images/visualAbstract.png" width="600" alt="Outline of our pipeline">
 </p>
 
 This repository contains the python wrapper for iTracker which we developed to carry out our benchmarking study "*Look me in the eye: Evaluating the phone-based eye tracking algorithm iTracker for monitoring gaze behaviour*" (Strobl et al, submitted). In this short tutorial we will outline how to use it to extract gaze estimations from a video taken with the front camera of a smart phone. For more information on iTracker, see the original paper [1], or the project webpage (http://gazecapture.csail.mit.edu/)
