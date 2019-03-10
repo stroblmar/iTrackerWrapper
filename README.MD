@@ -46,9 +46,9 @@ Next, we have to extract the frames from the video. To do so, we use the `skvide
 ```bash
 python extractFrames.py
 ``` 
-The script is set up so to process all files in the `data` folder. So, **if you'd like to process some of your own videos, simply put them in the `data` folder.** I can guarantuee that it works for .mp4 files. Likely it will work for other video formats as well, but I haven't tested this. For demonstration purposes, I've included a video of myself from one of my own experiments.
+The script is set up so to process all files in the `data` folder. So, **if you'd like to process some of your own videos, simply put them in the `data` folder.** we can guarantuee that it works for .mp4 files. Likely it will work for other video formats as well, but we haven't tested this. For demonstration purposes, I've included a video of myself from one of my own experiments.
 
-**Note:** For some reason the `skvideo` struggles with the videos from certain cameras. In those cases the `width` and `height` axes are the wrong way around. To overcome this, I have copied the method from the source code, and modified it. **If your extracted frames look like garbage**, see the details in the comments in `extractFrames.py` on how to use this alternative `read()` function.
+**Note:** For some reason `skvideo` struggles with the videos from certain cameras. In those cases the `width` and `height` axes are the wrong way around. To overcome this, we have copied the method from the source code, and modified it. **If your extracted frames look like garbage**, see the details in the comments in `extractFrames.py` on how to use this alternative `read()` function.
 
 ### 2.2. Segmenting the Images
 iTracker uses crops of the eyes and the mouth from the images to make its predictions. Thus, in the next step we have to segment the eyes and the mouth. We do so using the Viola-Jones segmentation algorithm implemented in `OpenCV`. To perform segmentation, run:
@@ -59,27 +59,37 @@ python segmentFrames.py
 
 Again, this script is written so that it will segment all videos in the `data` directory. So, if you previously put your own videos there and extracted the frames, this script should do the segmentation for you automatically as well.
 
-**Note:** Segmentation turned out to be surprisingly unreliable. You'd think, given how common face detectors are nowadays, segmentation shouldn't be a problem. However, in our study we found it regularly failed, even for "nice" pictures. I'm sure you can do better with a more sophisticated segmentation algorithm, but I did not have time to look into this. However, given Krafka and co-authors also report loosing almost 50% [1] of frames to segmentation - and they were using the iOS segmentation tool - perhaps it is a more widespread problem. So, don't be surprised if a good number of your segmentations fail.
+**Note:** Segmentation turned out to be surprisingly unreliable. You'd think, given how common face detectors are nowadays, segmentation shouldn't be a problem. However, in our study we found it regularly failed, even for "nice" pictures. I'm sure you can do better with a more sophisticated segmentation algorithm, but we did not have time to look into this. However, given Krafka and co-authors also report loosing almost 50% [1] of frames to segmentation - and they were using the iOS segmentation tool - perhaps it is a more widespread problem. So, don't be surprised if a good number of your segmentations fail.
 
 ## 3. Estimating Gaze using iTracker
-We're now ready to use iTracker. To do so, again I prepared a script that will analyse all video folders in the `data` directory. To run it, simply do:
+We're now ready to use iTracker. To do so, again we prepared a script that will analyse all video folders in the `data` directory. To run it, simply do:
 
 ```bash
 python runGazeEstimation.py
 ```  
-After processing is done, this will save the predictions for each video as a csv file in the video directory in `./data/`.
+After processing is done, this will save the predictions for each video as a csv file in the video directory in `./data/`. The data is in the format:
 
-This script utilises the iTracker wrapper class I developed for the project. This class has a number of further features, such as truncation of predictions to the screen, or multi-threading. To learn more about it explore the `iTrackerWrapper.py` source file.
+| SubjectName | FrameId | EstPosX | EstPosY |
+| :-------------: | :-------------: | :-------------: | :-------------: |
+| *Name of the directory containing the video* | *Id of the image*  | *Estimated x-position of the gaze location* | *Estimated y-position of the gaze location* |
 
+To collect the output of the last layer of the neural network which [1] and us used to train the SVR, uncomment the comments in lines 
 
+This script utilises the iTracker wrapper class we developed for the project. This class has a number of further features, such as truncation of predictions to the screen, or multi-threading. To learn more about it explore the `iTrackerWrapper.py` source file.
 
-To Do
-- [] Add note that commands work on mac and linux. Not sure about windows
-- [] Explain in more detail how segmentation works and the pieces I'm using
-- [] Run prediction both serial and in parallel
-- [] Add r script to plot results
-- [] Add docker reference to readme, and potentially picture as well
-- [] Add picture of output at the beginning to make the readme look more visually appealing.
+## 4. Visualisation of Results
+Finally, we can visualise the predictions using the R-script `plotiTrackerPredictions.R`. To run this, inside docker call:
+
+```bash
+Rscript plotiTrackerPredictions.R
+```  
+
+This will generate the following plot as `examplePredictions.png` inside the iTrackerWrapper directory. We've just done phone based eye tracking!
+![Docker Logo](images/examplePredictions.png)
+
+You can modify the script to use your phone and experimental setup by modifying the settings inside `plotiTrackerPredictions.R`. In the script I have also provided instructions as how to perform calibration.
+
+That brings me to the end of this demonstrations. I hope this was useful and the wrapper will help you getting started with phone based eye tracking. If you find a bug or have any questions just leave a message here. 
 
 ## References
 [1] Krafka K, Khosla A, Kellnhofer P, Kannan H. Eye Tracking for Everyone. IEEE Conf Comput Vis Pattern Recognit. 2016;2176-2184.
