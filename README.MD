@@ -3,7 +3,7 @@
   <img src="images/visualAbstract.png" width="600" alt="Outline of our pipeline">
 </p>
 
-This repository contains the python wrapper for iTracker which we developed to carry out our benchmarking study "*Look me in the eye: Evaluating the phone-based eye tracking algorithm iTracker for monitoring gaze behaviour*" (Strobl et al, submitted). In this short tutorial we will outline how to use it to extract gaze estimations from a video taken with the front camera of a smart phone. For more information on iTracker, see the original paper [1], or the project webpage (http://gazecapture.csail.mit.edu/)
+This repository contains the python wrapper for iTracker which we developed to carry out our benchmarking study ["*Look me in the eye: Evaluating the phone-based eye tracking algorithm iTracker for monitoring gaze behaviour*"](https://biomedical-engineering-online.biomedcentral.com/articles/10.1186/s12938-019-0670-1))[1]. In this short tutorial we will outline how to use it to extract gaze estimations from a video taken with the front camera of a smart phone. For more information on iTracker, see the original paper [2], or the project webpage (http://gazecapture.csail.mit.edu/)
 
 To get started, clone this repository to a convenient place on your computer, and follow the instructions below.
 
@@ -63,7 +63,7 @@ python segmentFrames.py
 
 Again, this script is written so that it will segment all videos in the `data` directory. So, if you previously put your own videos there and extracted the frames, this script should do the segmentation for you automatically as well.
 
-**Note:** Segmentation turned out to be surprisingly unreliable. You'd think, given how common face detectors are nowadays, segmentation shouldn't be a problem. However, in our study we found it regularly failed, even for "nice" pictures. I'm sure you can do better with a more sophisticated segmentation algorithm, but we did not have time to look into this. However, given Krafka and co-authors also report loosing almost 50% [1] of frames to segmentation - and they were using the iOS segmentation tool - perhaps it is a more widespread problem. So, don't be surprised if a good number of your segmentations fail.
+**Note:** Segmentation turned out to be surprisingly unreliable. You'd think, given how common face detectors are nowadays, segmentation shouldn't be a problem. However, in our study we found it regularly failed, even for "nice" pictures. I'm sure you can do better with a more sophisticated segmentation algorithm, but we did not have time to look into this. However, given Krafka and co-authors also report loosing almost 50% [2] of frames to segmentation - and they were using the iOS segmentation tool - perhaps it is a more widespread problem. So, don't be surprised if a good number of your segmentations fail.
 
 ## 3. Estimating Gaze using iTracker
 We're now ready to use iTracker. To do so, again we prepared a script that will analyse all video folders in the `data` directory. To run it, simply do:
@@ -77,7 +77,7 @@ After processing is done, this will save the predictions for each video as a csv
 | :-------------: | :-------------: | :-------------: | :-------------: |
 | *Name of the directory containing the video* | *Id of the image*  | *Estimated x-position of the gaze location* | *Estimated y-position of the gaze location* |
 
-To collect the output of the last layer of the neural network which [1] and us used to train the SVR, uncomment the comments in lines 
+To collect the output of the last layer of the neural network which [2] and us used to train the SVR, uncomment the comments in lines 
 
 This script utilises the iTracker wrapper class we developed for the project. This class has a number of further features, such as truncation of predictions to the screen, or multi-threading. To learn more about it explore the `iTrackerWrapper.py` source file.
 
@@ -98,4 +98,5 @@ You can modify the script to use your phone and experimental setup by modifying 
 That brings me to the end of this demonstrations. I hope this was useful and the wrapper will help you getting started with phone based eye tracking. If you find a bug or have any questions just leave a message here. 
 
 ## References
-[1] Krafka K, Khosla A, Kellnhofer P, Kannan H. Eye Tracking for Everyone. IEEE Conf Comput Vis Pattern Recognit. 2016;2176-2184.
+[1] Strobl, M., Lipsmeier F., Demenescu L., Gossens C., Lindemann M., De Vos M. Look me in the eye: evaluating the accuracy of smartphone-based eye tracking for potential application in autism spectrum disorder research. 2019; 18:51.
+[2] Krafka K, Khosla A, Kellnhofer P, Kannan H. Eye Tracking for Everyone. IEEE Conf Comput Vis Pattern Recognit. 2016; 2176-2184.
